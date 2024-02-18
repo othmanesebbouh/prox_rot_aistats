@@ -1,0 +1,50 @@
+import itertools
+
+
+EXP_GROUPS = {
+    "spatial": [{"ent_map_params":
+                        dict(compute_M_method="stochastic", eps=0.01, geom_batch_size=None,
+                             outer_iter=100, outer_threshold=1e-5,
+                             sinkhorn_iter=50000, sinkhorn_threshold=5e-3, sto_batch_size=1000, step_M=0.01,
+                             step_g_eps_factor=100,
+                             maxiter_M=1, maxiter_g=1000, monitor_compute_every_outer_iter=1,
+                             monitor_sinkhorn_iter=100000,
+                             monitor_sinkhorn_threshold=1e-4, init_M_method="rank1_random",
+                             init_M_seed=0, rank_M=None, seed=seed,
+                             monitor_subset_size=None, gw_cost_fn="IP", eta_fused=0.005,
+                             lin_cost_fn="IP"),
+               "data_params": dict(data_source="spatial", use_validation=True, val_batch_size=5000,
+                                   center_X=True, center_X_tilde=True, use_fused=True),
+               "path_params": ["eps", "compute_M_method",  "maxiter_g", "eta_fused", "step_M"],
+               "metrics_to_track": ["mse", "acc", "gw_cost", "ent_gw_cost"]} for seed in [0, 1, 2, 3, 4, 5,
+                                                                                          6, 7, 8, 9, 10]],
+    "scGM": [{"ent_map_params":  dict(compute_M_method="l1_reg", eps=0.05, geom_batch_size=None,
+                                         outer_iter=100, outer_threshold=1e-50,
+                                         sinkhorn_iter=50000, sinkhorn_threshold=1e-3, sto_batch_size=177,
+                                         step_M=0.01, l1_reg=l1_reg,
+                                         step_g_eps_factor=1,
+                                         maxiter_M=1, maxiter_g=1000, monitor_compute_every_outer_iter=1,
+                                         monitor_sinkhorn_iter=10,
+                                         monitor_sinkhorn_threshold=1e-4, init_M_method="ones",
+                                         init_M_seed=0, rank_M=None, seed=5,
+                                         monitor_subset_size=None, gw_cost_fn="IP", eta_fused=0,
+                                         lin_cost_fn="IP", save_params=True),
+                                "data_params": dict(data_source="scGM", center_X=True, use_validation=True,
+                                                    use_fused=False),
+                                "path_params": ["eps", "l1_reg", "gw_cost_fn"]} for l1_reg in [2, 1.5, 0]
+                               ] +
+            [{"ent_map_params": dict(compute_M_method="l12_reg", eps=0.05, geom_batch_size=None,
+                                     outer_iter=100, outer_threshold=1e-50,
+                                     sinkhorn_iter=50000, sinkhorn_threshold=1e-3, sto_batch_size=177,
+                                     step_M=0.01, l12_reg=7.5,
+                                     step_g_eps_factor=1,
+                                     maxiter_M=1, maxiter_g=1000, monitor_compute_every_outer_iter=1,
+                                     monitor_sinkhorn_iter=10,
+                                     monitor_sinkhorn_threshold=1e-4, init_M_method="ones",
+                                     init_M_seed=0, rank_M=None, seed=5,
+                                     monitor_subset_size=None, gw_cost_fn="IP", eta_fused=0,
+                                     lin_cost_fn="IP", save_params=True),
+              "data_params": dict(data_source="scGM", center_X=True, use_validation=True,
+                                  use_fused=False),
+              "path_params": ["eps", "l1_reg", "gw_cost_fn"]}]
+}
